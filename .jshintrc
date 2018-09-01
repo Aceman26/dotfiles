@@ -1,0 +1,25 @@
+{
+	"indent"        : 2,
+	"bitwise"       : true,
+	"camelcase"     : true,
+	"curly"         : true,
+	"eqeqeq"        : true,
+	"forin"         : true,
+	"freeze"        : true,
+	"immed"         : true,
+	"latedef"       : true,
+	"newcap"        : true,
+	"noarg"         : true,
+	"noempty"       : true,
+	"nonbsp"        : true,
+	"nonew"         : true,
+	"quotmark"      : "single",
+	"undef"         : true,
+	"unused"        : true,
+	"strict"        : true,
+	"maxdepth"      : 2,
+	"maxcomplexity" : 10,
+   "esversion"     : 6,
+   "esnext"        : true
+	"node"          : true
+}
