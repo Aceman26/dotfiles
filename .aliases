@@ -52,4 +52,8 @@ alias     sbashrc='source ~/.bashrc'
 alias     osshconfig='vi ~/.ssh/config'
 alias     oautospellvim='vi ~/.vim/after/plugin/abolish.vim'
 
+##################################
+### Development
+##################################
+source   ~/Dev/aliases/general.aliases
 
