@@ -1,0 +1,55 @@
+alias add2aliases='_() { printf "alias    $1=\x$(printf %x 39)$2\x$(printf %x 39)" >> ~/.aliases ; echo "" >> ~/.aliases ; source ~/.aliases ; }; _'
+
+##################################
+### Command line defaults
+##################################
+alias     ls='ls --color=auto --group-directories-first'
+alias     vi='gvim -p'
+alias     vio='vi -o'
+alias     rm='rm -i'
+alias     sl='ls'
+alias     ln='ln -i'
+alias     cp='cp -p'
+alias     mv='mv -i'
+alias     vu='vi'
+alias     car='cat'
+alias     bi='vi'
+alias     l='less'
+alias     h='history'
+alias     md='mkdir -p'
+alias     cd..='cd ..'
+alias     cd-='cd -'
+alias     pop='popd'
+alias     pd='pushd'
+alias     ppwd='pwd ; pwd | xclip'
+alias     cdp='cd `xclip -o`'
+alias     ll='ls -ltah'
+alias     pd='pushd'
+alias     pop='popd'
+alias     ks='ls'
+
+##################################
+### function based aliases
+##################################
+source ~/scripts/alias_functions.sh
+alias     mcd=_mcd
+alias     mvi=_mvi
+alias     cvi=_cvi
+alias     mvback=_mvb
+alias     rp='realpath'
+alias     crp=_crp
+alias     mvex=_renameFileExtention
+
+##################################
+### Open/Source files
+##################################
+alias     ovimrc='vi ~/.vimrc'
+alias     ogvimrc='vi ~/.gvimrc'
+alias     oa='vi ~/.aliases'
+alias     sa='source ~/.aliases; sbashrc'
+alias     obashrc='vi ~/.bashrc'
+alias     sbashrc='source ~/.bashrc'
+alias     osshconfig='vi ~/.ssh/config'
+alias     oautospellvim='vi ~/.vim/after/plugin/abolish.vim'
+
+

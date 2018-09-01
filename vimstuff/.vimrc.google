@@ -1,0 +1,205 @@
+source /usr/share/vim/google/google.vim
+Glug g4
+
+
+" Plugin configuration.
+" See http://google3/devtools/editors/vim/examples/ for example configurations
+" and http://go/vim/plugins for more information about vim plugins at Google.
+
+" Plugin loading is commented out below - uncomment the plugins you'd like to
+" load.
+
+" Load google's formatting plugins (http://go/vim/plugins/codefmt-google).
+" The default mapping is \= (or <leader>= if g:mapleader has a custom value),
+" with
+" - \== formatting the current line or selected lines in visual mode
+"   (:FormatLines).
+" - \=b formatting the full buffer (:FormatCode).
+"
+" To bind :FormatLines to the same key in insert and normal mode, add:
+"   noremap <C-K> :FormatLines<CR>
+"   inoremap <C-K> <C-O>:FormatLines<CR>
+Glug codefmt plugin[mappings] gofmt_executable="goimports"
+Glug codefmt-google
+
+" formatting, and for which all checked-in code is already conforming (thus,
+" autoformatting will never change unrelated lines in a file).
+augroup autoformat_settings
+  " For BUILD files and Go all of Google's files must be formatted.
+  autocmd FileType borg,gcl,patchpanel AutoFormatBuffer gclfmt
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType java AutoFormatBuffer google-java-format
+  autocmd FileType jslayout AutoFormatBuffer jslfmt
+  "autocmd FileType markdown AutoFormatBuffer mdformat
+  "autocmd FileType ncl AutoFormatBuffer nclfmt
+  autocmd FileType python AutoFormatBuffer pyformat
+  autocmd FileType textpb AutoFormatBuffer text-proto-format
+  autocmd FileType html,css,json AutoFormatBuffer js-beautify
+augroup END" Enable autoformatting on save for the languages at Google that enforce
+
+" Load YCM (http://go/ycm) for semantic auto-completion and quick syntax
+" error checking. Pulls in a google3-enabled version of YCM itself and
+" a google3-specific default configuration.
+Glug youcompleteme-google
+
+" Load the automated blaze dependency integration for Go.
+" Note: for Go, blazedeps uses the Go team's glaze tool, which is fully
+" supported by the Go team; for other languages. Note that the plugin is
+" currently unsupported for other languages.
+"Glug blazedeps auto_filetypes=`['go']`
+
+" Load piper integration (http://wiki/Main/VimPerforce).
+Glug piper plugin[mappings]
+Glug relatedfiles plugin[mappings]
+
+" Load the Critique integration. Use :h critique for more details.
+Glug critique plugin[mappings]
+
+" Load blaze integration (http://go/blazevim).
+Glug blaze plugin[mappings]
+
+" Load the syntastic plugin (http://go/vim/plugins/syntastic-google).
+" Note: this requires installing the upstream syntastic plugin from
+" https://github.com/scrooloose/syntastic.
+Glug syntastic-google
+
+" Load the ultisnips plugin (http://go/ultisnips).
+" Note: this requires installing the upstream ultisnips plugin from
+" https://github.com/SirVer/ultisnips.
+Glug ultisnips-google
+let g:UltiSnipsExpandTrigger = "<c-j>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+
+" All of your plugins must be added before the following line.
+
+" Enable file type based indent configuration and syntax highlighting.
+" Note that when code is pasted via the terminal, vim by default does not detect
+" that the code is pasted (as opposed to when using vim's paste mappings), which
+" leads to incorrect indentation when indent mode is on.
+" To work around this, use ":set paste" / ":set nopaste" to toggle paste mode.
+" You can also use a plugin to:
+" - enter insert mode with paste (https://github.com/tpope/vim-unimpaired)
+" - auto-detect pasting (https://github.com/ConradIrwin/vim-bracketed-paste)
+filetype plugin indent on
+
+" added by asafsamuel
+
+" Glug imports
+
+"Gtags - deprecated 
+" source /usr/share/vim/google/gtags.vim
+" nnoremap <C-\> :exe 'Gtlist ' . expand('<cword>')
+" nnoremap <C-L> :exe 'Gtlistcallers ' . expand('<cword>')
+
+" java import manager
+" Glug gtimporter
+"autocmd FileType java AutoFormatBuffer gtimporter
+" noremap <unique> <leader>j :GtImporter<CR>
+
+"Jade
+command Jade !/google/data/ro/teams/jade/jade %
+
+
+" Signify - add citcdiff support
+let g:signify_skip_filename_pattern = ['\.pipertmp.*']
+let g:signify_vcs_cmds = {'perforce':'DIFF=%d" -U0" citcdiff %f || [[ $? == 1 ]]'}
+let g:signify_vcs_list = ['perforce', 'git']
+let g:signify_vcs_cmds_diffmode = { 'perforce': 'p4 print %f' }
+
+map  <leader>osd <esc>:SignifyDiff<CR>
+
+
+" file-types
+Glug ft-java
+Glug ft-proto
+Glug ft-javascript
+Glug ft-soy
+
+"Some java highlighting options
+" :let java_highlight_functions=1
+:let java_highlight_lambda=1
+:let java_highlight_java_lang_ids=1
+:let java_highlight_all=1
+
+hi javaLambdaDef	ctermfg=152 guifg=#afd7d7 "rgb=175,215,215
+hi javaFuncDef		ctermfg=179 guifg=#d7af5f "rgb=215,175,95
+hi javaVarArg		ctermfg=152 guifg=#afd7d7 "rgb=175,215,215
+
+" Code search
+Glug csearch
+
+" Refactorer
+" Glug refactorer
+
+" Eclim
+" let g:EclimCompletionMethod = 'omnifunc'
+":set omnifunc? omnifunc=eclim#java#complete#CodeComplete
+
+let g:ycm_path_to_python_interpreter = "/usr/bin/python"
+" let g:ycm_server_use_vim_stdout = 0
+" let g:ycm_server_keep_logfiles = 1
+" let g:ycm_log_level = 'debug'
+"
+
+" Syntastic
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+let g:syntastic_javascript_checkers = ['gjslint']
+let g:syntastic_java_checkers = ['glint']
+let g:syntastic_html_checkers = ['']
+
+" pathogen for apt-vim
+execute pathogen#infect()
+call pathogen#helptags()
+
+" For mouse scrolling in Chrome SSH
+:set mouse=a
+:set ttymouse=sgr
+
+" vim-lsc 
+let g:lsc_server_commands = {'java': 'localhost:5800'}
+let g:lsc_auto_map = v:true
+
+" For vim-autoswap
+set title titlestring=
+
+function! CitcClientTitle()
+  let cwd = getcwd()
+  let matches = matchlist(cwd, '^.google.src.cloud.[^/]\+\/\([^/]\+\)')
+  if len(matches) > 0
+    return ' c/' . matches[1] . ' '
+  else
+    return ''
+  endif
+endfunction
+
+set titlestring=%t%(\ %M\%)%{CitcClientTitle()}%(\ (%{expand(\"%:~:.:h\")})%)%(\ %a%)\ %{expand(\"%:~:p\")}%<
+
+" Used for awesome java highlighting
+" Glug glug sources+=/google/src/files/head/depot/google3/experimental/users/rahm
+" Glug radiation-release
+
+Glug googler
+Glug googlespell
+Glug googlestyle
+
+
+" Kythe Language Server (go/kythe-languageserver)
+au User lsp_setup call lsp#register_server({
+    \ 'name': 'Kythe Language Server',
+    \ 'cmd': {server_info->['/google/data/ro/teams/grok/tools/kythe_languageserver', '--google3']},
+    \ 'whitelist': ['python', 'go', 'java', 'cpp', 'proto'],
+    \})
+
+nnoremap gd :<C-u>LspDefinition<CR>
